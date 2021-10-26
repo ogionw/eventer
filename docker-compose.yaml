@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: eventer
+    ports:
+      - "55000:5432"

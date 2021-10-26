@@ -6,6 +6,16 @@
 parameters:
 
 services:
+    #apply this tag automatically to all services whose classes implement a certain PHP interface:
+    _instanceof:
+        App\Domain\Product\Events\ProductEventInterface:
+          tags: [ 'app.product.event' ]
+        App\Message\Cqrs\CommandHandler:
+          tags:
+            - { name: messenger.message_handler, bus: command.bus }
+        App\Message\Cqrs\QueryHandler:
+          tags:
+            - { name: messenger.message_handler, bus: query.bus }
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -23,3 +33,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    product_factory:
+      class: App\Domain\Product\ProductFactory
+      public: true
