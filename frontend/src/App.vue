@@ -2,21 +2,19 @@
   <div id="app">
     <ProductForm/>
     <h1>{{productsCount}}</h1>
-    <div class="product" v-for="product in validProducts" :key="product.sku">
-      <h2>{{product.sku}}</h2>
-      <p>{{product.quantity}}</p>
-    </div>
+    <Product />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import ProductForm from "./components/ProductForm";
+import Product from "./components/Product";
 export default {
   name: "app",
-  computed: mapGetters(["validProducts", "productsCount"]),
+  computed: mapGetters(["productsCount"]),
   methods: mapActions(["fetchProducts"]),
-  components: { ProductForm },
+  components: { ProductForm, Product },
   async mounted() {
     // this.$store.dispatch("fetchProducts");
     await this.fetchProducts();
