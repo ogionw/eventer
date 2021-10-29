@@ -6,20 +6,27 @@ use App\Message\Command\ReceiveProductCommand;
 use App\Message\Cqrs\CommandBus;
 use App\Message\Cqrs\QueryBus;
 use App\Message\Query\GetProductsQuery;
+use App\Serializer\ProductSerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class ProductController extends AbstractController
 {
-    public function __construct(private CommandBus $commandBus, private QueryBus $queryBus){}
+    public function __construct(private CommandBus $commandBus, private QueryBus $queryBus, private ProductSerializerInterface $serializer){}
 
     #[Route('/products/{sku}/receive', name: 'receiveProduct', methods: 'PATCH')]
     public function receiveProduct(string $sku, Request $request): Response
     {
-        $data = json_decode($request->getContent(), true);
-        $receiveProductCommand = new ReceiveProductCommand($sku,$data['quantity']);
+        //$data = json_decode($request->getContent(), true);
+        $receiveProductCommand = $this->serializer->deserialize($request, $sku);
+        var_dump($receiveProductCommand); die();
+        //$receiveProductCommand = new ReceiveProductCommand($sku,$data['quantity']);
         $this->commandBus->dispatch($receiveProductCommand);
         return $this->json([
             'message' => 'success',
