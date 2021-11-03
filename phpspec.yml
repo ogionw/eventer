@@ -1,0 +1,9 @@
+suites:
+  default:
+    namespace: App
+    psr4_prefix: App
+
+matchers:
+  - spec\Matcher\BeGreaterMatcher
+
+formatter.name: pretty
