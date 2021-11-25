@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AzureController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    html {
+        --FatalErrorBorder: #cc3300;
+        --FatalErrorBackground: #ffb399;
+    }
+    * {
+        font-family: "Segoe UI", Calibri, sans-serif;
+    }
+
+
+
+    div#fatalError {
+        display: block;
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        z-index: 400;
+        background-color: var(--FadedBackground);
+    }
+    div#fatalErrorInner {
+        width: 500px;
+        min-height: 100px;
+        padding: 25px;
+        border: 1px solid var(--FatalErrorBorder);
+        background-color: var(--FatalErrorBackground);
+        text-align: center;
+        position: absolute;
+        z-index: 500;
+        left: calc(50% - 250px);
+        top: 25%;
+    }
+    div#fatalError span {
+        font-weight: bold;
+        font-size: 24px;
+        display: block;
+        padding-bottom: 20px;
+        padding-top: 5px;
+    }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello there, {{ displayName }}<br/> user: {{ userName }}</h1>
+    <h2><a href="/azure/logout">Log out</a></h2>
+
+
+    Your roles in this app are:
+    <ul>
+        {% for role in userRoles %}
+            <li> {{ role }} </li>
+        {% endfor %}
+    </ul>
+    <img src="{{ photoSrc }}" alt="User Photo" />
+    <br><br>
+    Profile Graph API output:
+    <pre>
+        {{ profile }}
+    </pre>
+</div>
+{% endblock %}
