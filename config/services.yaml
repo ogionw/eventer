@@ -10,10 +10,10 @@ services:
     _instanceof:
         App\Warehouse\Domain\Product\Events\ProductEventInterface:
           tags: [ 'app.product.event' ]
-        App\Warehouse\Message\Cqrs\CommandHandler:
+        App\Warehouse\Application\Message\Cqrs\CommandHandler:
           tags:
             - { name: messenger.message_handler, bus: command.bus }
-        App\Warehouse\Message\Cqrs\QueryHandler:
+        App\Warehouse\Application\Message\Cqrs\QueryHandler:
           tags:
             - { name: messenger.message_handler, bus: query.bus }
     # default configuration for services in *this* file

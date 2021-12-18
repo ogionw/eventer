@@ -13,6 +13,6 @@ doctrine:
             App:
                 is_bundle: false
                 type: annotation
-                dir: '%kernel.project_dir%/src/Warehouse/Entity'
-                prefix: 'App\Warehouse\Entity'
+                dir: '%kernel.project_dir%/src/Warehouse/Infrastructure/Entity'
+                prefix: 'App\Warehouse\Infrastructure\Entity'
                 alias: App
