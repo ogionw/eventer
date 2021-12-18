@@ -1,14 +1,39 @@
 <?php
-$ch = curl_init('https://microsof.com/');
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, []);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//$token = 'EwBoA8l6BAAUwihrrCrmQ4wuIJX5mbj7rQla6TUAAYEHkw/Q3rk5CoC6QOBu9No6AK+gj3diKVTf/9BQMLgiXUXiC2OVkx6TPG63DdNBwHzqyahv9kZjBNly6/AmetJ8eU1YP5Nt1mOsEPH3ImPwgTAb41sMuuARzBYAziU060IwT1e9bPvhP/wKjSSHiimZIUaqDZ5D0rp74ZxFlU4MmK/Ac7U/WXllIXxzU3POvJXVGspb0XABOIFdahSNE35XLUlNfBt96III+bp8A2J39OesXpAMNN6NOaBlPxX7UD7k9D0eg6VERUeQBcNgXjKs+ebGDG8R1YvDwmusnZKyu7GPT+La0y3838quo1Rzio74CLGV/+IcCQlFHGWzjyQDZgAACBt2AFWNFsxhOAIL7TmI6dIO+fq6ypzFdCBJZzpPgjlHaFpo37jc0okW2YHWOa7sXDaRZe/YBPWiwRdz0InPZ0EJNwmCfmlouM0vmwlLijYxaEpp8LsJqUww3jREwWKADdXO+CvvpHJCsCTKjL+P6TWDPQ3rfmMA0ApWW/gExEL6KBoFqK8e+5vOlBHMCoEXxu9Tj2B1TT6/uHC6HxTmPGI61p8Nf1HgyIUlGWVMIMMvrvgnqNynK8V8ugYyU53ADUj+DUiGq5nXj4elS0zZzR9Q0o+AaqNJYGXWfZ3fXu0OpGUAmBjGoM5jj0gitJto71bUFZQNAuHUAyiU0eVYhnM8ctOealEmkpmhdDfqjA9ot4da9wB5GSzTx8t+QdMGXd0tnbyGHr6PxzE+UkEN4oaDO+LFMBGrm/KRXZhIf0xQyBKvC/iDf7jNYBcqBlwl7PnXVYZk2SLD1haM0MhDaqwSbaQRy7VWR44N+0wVHmbp7gIomARXxIWErBeUcuVlywzkHOEZh2A3a79Ot71Yp7oEuUn9B3phDHNGZRgTSVTkrFUFSL6PlmSpXRFdXklbuaPHw12XThfrVReuDpZpWgrJm2WOctdz6oclWqURnupql/1q1C8Ibg/2gKrUqdxcFE2mVYA/ELuDFYE8gYKaDr4G+8jOuU53WsojMrKaIKf+CnQi3KJIVsAQXi6lQZ1Ye5q0AdU1SOsazdF3YjIZkpk2X0mVnIdmFTvwvNYNhDTeTmx8j8b0mFLDUWbhkt/6RDYxcwI=';
+//$wrongToken = 'eyJ0eXAiOiJKV1QiLCJub25jZSI6Im45NUR4ZC1xUV9qUjFZTGRGcUhsMmg5cnVzMEQ1MzhMdmttZF9DbzhmSlEiLCJhbGciOiJSUzI1NiIsIng1dCI6Imwzc1EtNTBjQ0g0eEJWWkxIVEd3blNSNzY4MCIsImtpZCI6Imwzc1EtNTBjQ0g0eEJWWkxIVEd3blNSNzY4MCJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8yOGE1OTQ0OS1jMTNmLTRhMWQtYjEwNi02NTNlMjJhYWIyNDkvIiwiaWF0IjoxNjM3ODM3MzYwLCJuYmYiOjE2Mzc4MzczNjAsImV4cCI6MTYzNzg0MjYyNSwiYWNjdCI6MCwiYWNyIjoiMSIsImFpbyI6IkFVUUF1LzhUQUFBQTlhdUpCQVE1ekgxZUwwMS9kME0wRFJ2dU1aNTdMOHI2Z2JnNnlUSVU5VytyeXNIUDMwQVB1TjhWRHMrVUdLdkNPUnJ0Z3paRFQ1UzJkUUcybTlzYTRnPT0iLCJhbHRzZWNpZCI6IjE6bGl2ZS5jb206MDAwM0JGRkQwNjkzNDU5OCIsImFtciI6WyJwd2QiXSwiYXBwX2Rpc3BsYXluYW1lIjoiRXZlbnRlciIsImFwcGlkIjoiOTFjNDA1ZGMtNWQ3NC00NDk4LWJlMzAtZGM3ZjMxN2E2ODIwIiwiYXBwaWRhY3IiOiIxIiwiZW1haWwiOiJvZ2lvbndAZ21haWwuY29tIiwiZmFtaWx5X25hbWUiOiJLb3psaW5za3kiLCJnaXZlbl9uYW1lIjoiTGlvbiIsImlkcCI6ImxpdmUuY29tIiwiaWR0eXAiOiJ1c2VyIiwiaXBhZGRyIjoiMTg1LjE0MS41NS4xMzIiLCJuYW1lIjoiTGlvbiBLb3psaW5za3kiLCJvaWQiOiJjMDI5NjNmZC00MjA0LTQxMDktODA3My0zZGMwYWYzNGMyOTAiLCJwbGF0ZiI6IjMiLCJwdWlkIjoiMTAwMzIwMDFCMDcyOTFBQSIsInJoIjoiMC5BVThBU1pTbEtEX0JIVXF4Qm1VLUlxcXlTZHdGeEpGMFhaaEV2akRjZnpGNmFDQlBBRFUuIiwic2NwIjoib3BlbmlkIHByb2ZpbGUgVXNlci5SZWFkIGVtYWlsIiwic2lnbmluX3N0YXRlIjpbImttc2kiXSwic3ViIjoiTkVMbmNLSnhYTkx0YjY1WEtJUlZDZ1lLSl9SQ2pJaEJwMmxhQ2NPVVoybyIsInRlbmFudF9yZWdpb25fc2NvcGUiOiJFVSIsInRpZCI6IjI4YTU5NDQ5LWMxM2YtNGExZC1iMTA2LTY1M2UyMmFhYjI0OSIsInVuaXF1ZV9uYW1lIjoibGl2ZS5jb20jb2dpb253QGdtYWlsLmNvbSIsInV0aSI6Inp6QTE3NG9GNWtteDVTUTk3TjZuQWciLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbIjYyZTkwMzk0LTY5ZjUtNDIzNy05MTkwLTAxMjE3NzE0NWUxMCIsIjliODk1ZDkyLTJjZDMtNDRjNy05ZDAyLWE2YWMyZDVlYTVjMyIsImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfc3QiOnsic3ViIjoiazBvdVR3MmdPVXMwM0xaQnNSZVVlMFMzLURDMjZjNWhRQ0dLbHZKLVNmRSJ9LCJ4bXNfdGNkdCI6MTYzNzgzNjUzM30.YOuDREVvi2bfi6yZ6rpm1-wH3QLut_PYUSu9MeH10_OS_pdS-NjnaB1QxQrqw0C7ivbQFAV2mIaV2mEIG8b_DflCMFvSj3lJbhxqH4VQRkUrk33x5wA2mtHSocT89XJTfS2czyOaAjqvDJtbez93ipqFILQeB4fpU0z1wGaVGGY9R_IcvtVKX1dEnYQK5fcJAzkV0QP7JcA6gN3WtUtZvHRQjVqy2kRAABPfHYvU-FNN-yFovUM96Z4UC5vELoAQqv6T-5KK9TwmE7Rk0MoFf61YrSaNLqGBsnY2073f_n1gJ7PdA9_kxWJjGLyJESGAMeHiZCgrmFEPgt6kaXcTdw';
+//$url = 'https://graph.microsoft.com/v1.0/me/photo/';
+//$contentType = 'application/json';
+//$ch = curl_init($url);
+//curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $token, 'Content-Type: ' . $contentType));
+////curl_setopt($ch, CURLOPT_POST, 1);
+////curl_setopt($ch, CURLOPT_POSTFIELDS, []);
+//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//
+//$response = curl_exec($ch);
+//if ($cError = curl_error($ch)) {
+//    echo $cError."<br/>";
+//}
+//curl_close($ch);
+//var_dump($response);
+//die('this is test');
 
-$response = curl_exec($ch);
-if ($cError = curl_error($ch)) {
-    echo $cError."<br/>";
+$url = "https://login.microsoftonline.com/d181a839-8e50-4309-8bc2-d70d12a9b97a/oauth2/v2.0/token";
+$data = 'grant_type=authorization_code&client_id=8157b294-4cc5-4589-9373-430a333be584&redirect_uri=http%3A%2F%2Flocalhost%3A808%2Fgraph-profile&code=0.ATAAOaiB0VCOCUOLwtcNEqm5epSyV4HFTIlFk3NDCjM75YQwABM.AQABAAIAAAD--DLA3VO7QrddgJg7WevrCkROy5B8iGvsEXINLhf6zHxe_Crkqy5H-C_a-Uwy45TzKeB4qbeKyAJW2XX3MJ3RenJfTTfqy6zHotBKWxqzRQW6U5BTxKfI6STVbkM8c4m--k6Py_yv8dp9RN3_QQnZ4lQm8DLXUd8S1vtOQyyb3Q0_l2cA-lyPl7Kj6n7G7jHKT92Scp-V8isSvYs1KDE3S7IBhtERgYIFVazLnDmnm1tYumnLOrYXJvSsKOWq9StyXUyQ5E_egsg4eesVw0wgavKsh1R8QX6EcomskZYiFxn1uV5BrmvyhEa7GFFeAVjT5F3h2lncTd45owmI1_edxP3AtYcUshsaQLeKK2CzdffV4RKZ9T8X-3AkI9wOh_q5ZIMdk1VOfg5WDichkD0zAo958Y5m8cTWgaYti9CGi2W6jung0mAkQVES9bB6FbWU06GW_J8_PCaI99CvjYzN-c50zMBLmw6_ljQE8v8ZsQMrejRQf5dseUr7-aAyMT9DjZlwqFGd5CdWHpUlo_rRDfRK2v0Wjq5CJkZ1iFq8FndBdWY1Q-oBv2GmJ26u2Ydc8-1zs2TTeplSoxBINxcUwLjhkUdi0L8pyag4vEK_t8M7eZ-L9tTvpB_CKNa7vZp0iQKi__Qbh5fcbzP-VdbVcr8jW6QPATUn5GTEEGd2_AtEa_gJXEJFrMLcxIRA597hZ8SgqCrBKHECiUaN4iWaXFqtPdLwD8UOzeK14iO58iAA&code_verifier=lmwyftoBBPnUGV5NtfxEvEwxcd4BaXZVZmv7NjQFb~nF7Ph2-Uav7oxBMKN2-VGBZYIuNZWyPN7ShHzKxX288UtIlU8svCRKNuMS1ceaw7E46MBZeYCdPgNvwH0so3by&client_secret=pxt7Q%7Exy8Xganat5pGqV30fG6LmMchdBBxXS4';
+$curl = curl_init($url);
+curl_setopt($curl, CURLOPT_POST, true);
+curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+//curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+
+$response = curl_exec($curl);
+if ($cError = curl_error($curl)) {
+    echo $cError . "<br/>";
+    die('post request error');
 }
-curl_close($ch);
+curl_close($curl);
+var_dump($response);
 die('this is test');

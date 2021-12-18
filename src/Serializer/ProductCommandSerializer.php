@@ -17,11 +17,17 @@ final class ProductCommandSerializer implements ProductSerializerInterface
         $this->serializer = new Serializer([$normalizer], [new JsonEncoder()]);
     }
 
-    public function deserialize(Request $request, string $sku){
-        $a = json_decode($request->getContent(),true);
-        $a["sku"] = $sku;
+    public function deserialize(Request $request, string $sku) : ReceiveProductCommand
+    {
+        $raw = $request->getContent();
+        $post = json_decode($raw, true);
+        if(! $post){
+            parse_str($raw, $post);
+            $post['quantity'] = (int)$post['quantity'];
+        }
+        $post["sku"] = $sku;
         return $this->serializer->deserialize(
-            json_encode($a),
+            json_encode($post),
             ReceiveProductCommand::class,
             'json'
         );

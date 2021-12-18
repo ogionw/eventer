@@ -1,4 +1,5 @@
 {
+    "name": "lion/application",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
@@ -13,6 +14,8 @@
         "doctrine/doctrine-bundle": "^2.4",
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/orm": "^2.10",
+        "lion/auth": "@dev",
+        "microsoft/microsoft-graph": "^1.47",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/console": "5.3.*",
         "symfony/dotenv": "5.3.*",
@@ -42,9 +45,19 @@
         },
         "sort-packages": true
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/lion/auth",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "Lion\\Auth\\": "vendor/lion/auth"
         }
     },
     "autoload-dev": {

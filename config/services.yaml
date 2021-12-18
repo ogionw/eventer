@@ -36,3 +36,7 @@ services:
     product_factory:
       class: App\Domain\Product\ProductFactory
       public: true
+
+    Lion\Auth\Factory\AzureServiceFactory:
+      class: Lion\Auth\Factory\AzureServiceFactory
+      public: true

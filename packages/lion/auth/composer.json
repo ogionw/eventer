@@ -1,0 +1,17 @@
+{
+    "name": "lion/auth",
+    "description": "AuthC and AuthZ",
+    "license": "proprietary",
+    "keywords": ["framework", "zf2"],
+    "require": {
+        "php": ">=7.2",
+        "ext-curl": "*"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Lion\\Auth\\": "src/"
+        }
+    }
+}

@@ -20,13 +20,10 @@ class ProductController extends AbstractController
 {
     public function __construct(private CommandBus $commandBus, private QueryBus $queryBus, private ProductSerializerInterface $serializer){}
 
-    #[Route('/products/{sku}/receive', name: 'receiveProduct', methods: 'PATCH')]
+    #[Route('/products/{sku}/receive', name: 'receiveProduct', methods: 'POST')]
     public function receiveProduct(string $sku, Request $request): Response
     {
-        //$data = json_decode($request->getContent(), true);
         $receiveProductCommand = $this->serializer->deserialize($request, $sku);
-        var_dump($receiveProductCommand); die();
-        //$receiveProductCommand = new ReceiveProductCommand($sku,$data['quantity']);
         $this->commandBus->dispatch($receiveProductCommand);
         return $this->json([
             'message' => 'success',
@@ -37,18 +34,20 @@ class ProductController extends AbstractController
     public function getProducts(): Response
     {
         $productStates = $this->queryBus->handle(new GetProductsQuery());
+        $products = [];
         foreach ($productStates as $sku=>$productState){
-            $result[] = [
+            $products[] = [
                 'sku'=>$sku,
                 'firstAddedAt'=>date_format($productState->firstAddedAt, 'Y-m-d H:i:s'),
                 'lastUpdatedAt'=>date_format($productState->lastUpdatedAt, 'Y-m-d H:i:s'),
                 'quantity'=>$productState->quantity,
                 ];
         }
-        $response = $this->json($result);
-        $response->headers->set('Content-Type', 'application/json');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        return $response;
+//        $response = $this->json($result);
+//        $response->headers->set('Content-Type', 'application/json');
+//        $response->headers->set('Access-Control-Allow-Origin', '*');
+//        return $response;
+        return $this->render('product/index.html.twig', ['products' => $products]);
 
     }
 }

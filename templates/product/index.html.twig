@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product list{% endblock %}
+
+{% block body %}
+<style>
+    .taskForm {
+        display: none;
+        border-style: solid;
+        position: fixed;
+        top: 30%;
+        left: 30%;
+    }
+    .productTable {
+        border-style: solid;
+        border-width: thin;
+    }
+    .productTable td{
+        border-style: solid;
+        border-width: thin;
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".taskSelect").change(function(){
+            let form = $(this).parent().find('form');
+            if(this.value){
+                $(form).show();
+                $(form).find('li:first').html($(this).find(":selected").text());
+                var actParts = $(form).attr('action').split('/');
+                actParts[3] = this.value;
+                $(form).attr('action', actParts.join('/'))
+            }
+            else
+                $(form).hide();
+            //alert(this.value);
+        });
+        $(".closeTask").click(function(){
+            $(this).parent().hide();
+            $(this).parent().siblings('select:first').val('');
+        })
+    })
+</script>
+
+<div class="product-main">
+        <table class="productTable">
+            <thead>
+            <tr>
+                <th>SKU</th>
+                <th>First Added At</th>
+                <th>Last Updated At</th>
+                <th>Quantity</th>
+                <th>Change</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product['sku'] }}</td>
+                    <td>{{ product['firstAddedAt'] }}</td>
+                    <td>{{ product['lastUpdatedAt'] }}</td>
+                    <td>{{ product['quantity'] }}</td>
+                    <td>
+                        <select class="taskSelect">
+                            <option value=""></option>
+                            <option value="receive">Receive Product</option>
+                            <option value="ship">Ship Product</option>
+                            <option value="adjust">Adjust Quantity</option>
+                        </select>
+                        <form style="display:none" class="taskForm" method="post" action="/products/{{ product['sku'] }}/receive">
+                            <ul>
+                                <li></li>
+                                <li>sku: {{ product['sku'] }}</li>
+                                <li>current quantity: {{ product['quantity'] }}</li>
+                            </ul>
+                            How many?
+                            <input type="text" name="quantity"/>
+                            <input type="submit" value="submit"/>
+                            <input type="button" value="close" class="closeTask">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+</div>
+{% endblock %}
