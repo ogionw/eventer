@@ -4,6 +4,6 @@ suites:
     psr4_prefix: App
 
 matchers:
-  - spec\Matcher\BeGreaterMatcher
+  - spec\Dinopark\Matcher\BeGreaterMatcher
 
 formatter.name: pretty

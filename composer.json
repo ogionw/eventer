@@ -57,6 +57,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
+            "App\\Warehouse\\": "src/Warehouse",
             "Lion\\Auth\\": "vendor/lion/auth"
         }
     },

@@ -1,5 +1,9 @@
-controllers:
-    resource: ../../src/Controller/
+warehouse:
+    resource: ../../src/Warehouse/Controller/
+    type: annotation
+
+azure:
+    resource: ../../src/Azure/Controller/
     type: annotation
 
 kernel:
