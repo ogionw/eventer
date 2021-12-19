@@ -1,8 +1,6 @@
 params:
-  secret_value: 'InZ7Q~D8lvrKDKZe9h2tBtlCchY9wA8a20AL6'
   application_id: '91c405dc-5d74-4498-be30-dc7f317a6820'
   tenant_id: '28a59449-c13f-4a1d-b106-653e22aab249'
-  secret_id: '4fe34b90-57ec-4806-8636-bcad7d9e7c34'
   object_id: 'db7b73db-7d09-4d2a-aaa2-2261b6a7104b'
   enterprise_object_id: '2f4ed3af-bee8-48af-87c7-0ec15ff6101e'
   owner_id: 'c02963fd-4204-4109-8073-3dc0af34c290'
