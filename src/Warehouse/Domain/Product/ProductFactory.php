@@ -16,7 +16,13 @@ final class ProductFactory implements ProductFactoryInterface
         $this->productEvents = $productEvents;
     }
 
-    public function createEvent(string $sku, string $type, int $quantity, DateTimeImmutable $createdAt, string $description = null, int $id = null)
+    public function createEvent(
+        string $sku,
+        string $type,
+        int $quantity,
+        DateTimeImmutable $createdAt,
+        string $description = null,
+        int $id = null)
     {
         foreach ($this->productEvents as $eventPrototype){
             if($eventPrototype->getType() === $type){

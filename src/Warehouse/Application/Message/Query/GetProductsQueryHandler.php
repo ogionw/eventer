@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace App\Warehouse\Application\Message\Query;
 use App\Warehouse\Domain\Product\ProductFactoryInterface;
 use App\Warehouse\Application\Message\Cqrs\QueryHandler;
+use App\Warehouse\Domain\Repository\ProductEventRepositoryInterface;
 use App\Warehouse\Presentation\Message\Query\GetProductsQuery;
-use App\Warehouse\Infrastructure\Repository\ProductEventRepository;
 
 final class GetProductsQueryHandler implements QueryHandler
 {
     public function __construct(
-        private ProductEventRepository $peRepo,
+        private ProductEventRepositoryInterface $peRepo,
         private ProductFactoryInterface $factory
     ){}
 

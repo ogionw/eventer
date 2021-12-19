@@ -76,7 +76,14 @@ final class Product
         if($quantity < 0){
             throw new DomainException("incorrect value");
         }
-        $event = $this->factory->createEvent($this->sku, AdjustedProductEvent::TYPE, $quantity, new DateTimeImmutable(), $description, null);
+        $event = $this->factory->createEvent(
+            $this->sku,
+            AdjustedProductEvent::TYPE,
+            $quantity - $this->currentState->quantity,
+            new DateTimeImmutable(),
+            $description,
+            null
+        );
         $this->addEvent($event);
     }
 
@@ -90,6 +97,6 @@ final class Product
     }
     public function applyAdjusted(AdjustedProductEvent $event)
     {
-        $this->currentState->quantity = $event->getQuantity();
+        $this->currentState->quantity += $event->getQuantity();
     }
 }

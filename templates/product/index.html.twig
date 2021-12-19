@@ -25,17 +25,12 @@
 <script>
     $(document).ready(function(){
         $(".taskSelect").change(function(){
-            let form = $(this).parent().find('form');
             if(this.value){
-                $(form).show();
-                $(form).find('li:first').html($(this).find(":selected").text());
-                var actParts = $(form).attr('action').split('/');
-                actParts[3] = this.value;
-                $(form).attr('action', actParts.join('/'))
+                $(this).parent().find('.'+this.value+'Form').show();
             }
-            else
-                $(form).hide();
-            //alert(this.value);
+            else {
+                $(".taskForm").hide();
+            }
         });
         $(".closeTask").click(function(){
             $(this).parent().hide();
@@ -69,14 +64,27 @@
                             <option value="ship">Ship Product</option>
                             <option value="adjust">Adjust Quantity</option>
                         </select>
-                        <form style="display:none" class="taskForm" method="post" action="/products/{{ product['sku'] }}/receive">
-                            <ul>
-                                <li></li>
-                                <li>sku: {{ product['sku'] }}</li>
-                                <li>current quantity: {{ product['quantity'] }}</li>
-                            </ul>
-                            How many?
-                            <input type="text" name="quantity"/>
+                        <form style="display:none" class="taskForm receiveForm" method="post" action="/products/{{ product['sku'] }}/receive">
+                            Receiving a product(change value for new product):<br/>
+                            <input name="sku" value="{{ product['sku'] }}" type="text"/><br/>
+                            How many are we receiving?<br/>
+                            <input type="text" name="quantity"/><br/>
+                            <input type="submit" value="submit"/>
+                            <input type="button" value="close" class="closeTask">
+                        </form>
+                        <form style="display:none" class="taskForm shipForm" method="post" action="/products/{{ product['sku'] }}/ship">
+                            Shipping a product "{{ product['sku'] }}"<br/>
+                            How many do we ship?<br/>
+                            <input type="text" name="quantity"/><br/>
+                            <input type="submit" value="submit"/>
+                            <input type="button" value="close" class="closeTask">
+                        </form>
+                        <form style="display:none" class="taskForm adjustForm" method="post" action="/products/{{ product['sku'] }}/adjust">
+                            Adjusting a product "{{ product['sku'] }}":<br/>
+                            How many we currently have?<br/>
+                            <input type="text" name="quantity"/><br/>
+                            What is the reason for change?<br/>
+                            <input name="description" type="text"/><br/>
                             <input type="submit" value="submit"/>
                             <input type="button" value="close" class="closeTask">
                         </form>

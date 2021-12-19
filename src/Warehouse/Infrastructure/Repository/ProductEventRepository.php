@@ -7,6 +7,7 @@ use App\Warehouse\Domain\Product\Events\AdjustedProductEvent;
 use App\Warehouse\Domain\Product\Events\ProductEventInterface;
 use App\Warehouse\Domain\Product\Product;
 use App\Warehouse\Domain\Product\ProductFactoryInterface;
+use App\Warehouse\Domain\Repository\ProductEventRepositoryInterface;
 use App\Warehouse\Infrastructure\Entity\ProductEvent;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -19,7 +20,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ProductEvent[]    findAll()
  * @method ProductEvent[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductEventRepository extends ServiceEntityRepository
+class ProductEventRepository extends ServiceEntityRepository implements ProductEventRepositoryInterface
 {
     private ProductFactoryInterface $factory;
 
@@ -47,7 +48,6 @@ class ProductEventRepository extends ServiceEntityRepository
             ->andWhere('p.sku = :val')
             ->setParameter('val', $sku)
             ->orderBy('p.createdAt', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
@@ -79,7 +79,6 @@ class ProductEventRepository extends ServiceEntityRepository
             }
         }
         $this->_em->flush();
-        //var_dump($this->findBySku($product->getSku())); die();
     }
 
     private function eventToEntity(ProductEventInterface $event): ProductEvent
@@ -99,7 +98,7 @@ class ProductEventRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->orderBy('p.sku, p.createdAt', 'ASC')
-            ->setMaxResults(10)
+            //->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }
